@@ -166,7 +166,7 @@ var MeanTween = MeanTween || {};
     };
 
     MeanTween.animate = function (context, duration) {
-        var timer = new Tweener();
+        var timer = new MeanTween();
 
         timer._context = context;
 
@@ -303,4 +303,6 @@ var MeanTween = MeanTween || {};
         var date = new Date();
         return date.getTime();
     };
+
+    var T = MeanTween;
 }());
