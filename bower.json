@@ -1,0 +1,26 @@
+{
+  "name": "mean-tween",
+  "version": "0.0.1",
+  "authors": [
+    "cinkonaap <horoszko.marcin@gmail.com>"
+  ],
+  "description": "Tween without limit, an JavaScript library encapsulating timeouts, interpolation methods and more",
+  "main": "MeanTween.js",
+  "keywords": [
+    "tween",
+    "html5",
+    "jquery",
+    "interpolation",
+    "game",
+    "application",
+    "visual",
+    "freedom",
+    "mean"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
