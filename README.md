@@ -76,6 +76,10 @@ All rights for tweening functions goes to [Robert Penner](http://www.robertpenne
 
 ## Features to implement
 
+- Pause / Resume
+
+- Backward / Forward
+
 - Parallel / Sequence animations
 ```javascript
 .parallel() : TweenHash
