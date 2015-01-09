@@ -9,11 +9,11 @@ If that is the case, this library is for you.
 ## How to use
 
 #### Visual Examples 
-<br/>
+
 todo..
 
 #### Code Examples  
-<br/>
+
 Simplistic
 
 ```javascript
@@ -26,7 +26,7 @@ MaxTween
         this.css('transform', 'rotate('+ currentRotation +'deg)'); })
     .go();
 ```
-</br>
+
 Full
 
 ```javascript
@@ -48,7 +48,7 @@ tweenObject.resume();
 tweenObject.stop();
 ```
 #### API
-<br/>
+
 todo.. ( MeanTween, TweenInstance, TweenHash )
 
 #### Easing functions
