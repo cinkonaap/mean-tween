@@ -126,7 +126,7 @@ var MeanTween = MeanTween || {};
         this._isInfinite = true;
         this._loopDelay = loopDelay || false;
 
-        this._iteranceTween();
+        return this._iteranceTween();
     };
 
     MeanTween.prototype.delay = function (delay) {
