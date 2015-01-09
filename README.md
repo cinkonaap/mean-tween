@@ -1,35 +1,55 @@
 # Tweening with freedom!
 
-## Main 
+## Motivation 
 
 Are you tired of limiting tween libraries, because all you want is encapsulated delay/tween functionallity, interpolation methods and DIY tweening stuff.
 
 If that is the case, this library is for you.
 
-## How to use ( API for now )
+## How to use
 
-#### Minimalistic example
+#### Visual Examples 
+<br/>
+todo..
+
+#### Code Examples  
+<br/>
+Simplistic
+
 ```javascript
 var currentRotation = 0;
-MaxTween.animate($element, 1500).step(function (t, e, v, d) {
-    currentRotation = currentRotation + e * 360;
-    this.css('transform', 'rotate('+ currentRotation +'deg)');
-}).go();
-```
 
-#### API methods
+MaxTween
+    .animate($element, 1500)
+    .step(function (t, e, v, d) {
+        currentRotation = currentRotation + e * 360;
+        this.css('transform', 'rotate('+ currentRotation +'deg)'); })
+    .go();
+```
+</br>
+Full
+
 ```javascript
-animate(element, miliseconds)
-delay(miliseconds)
-infinite()
-interpolation(MeanTween.Interpolation)
+var currentRotation = 0;
 
-step(callback(context, time, elapsed, value, duration))
-complete(callback())
-loop(callback())
-
-go()
+var tweenObject = MaxTween
+    .animate($element, 1500)
+    .step(function (t, e, v, d) {
+        currentRotation = currentRotation + e * 360;
+        this.css('transform', 'rotate('+ currentRotation +'deg)'); })
+    .loop(function () {})
+    .complete(function () {})
+    .delay(3000)
+    .times(5, true)
+    .go();
+    
+tweenObject.pause();
+tweenObject.resume();
+tweenObject.stop();
 ```
+#### API
+<br/>
+todo.. ( MeanTween, TweenInstance, TweenHash )
 
 #### Easing functions
 - LINEAR
@@ -52,13 +72,16 @@ go()
 - CIRC_EASE_OUT
 - CIRC_EASE_IN_OUT
 
-All rights for tweening functions goes to [Robert Penner](www.robertpenner.com)
+All rights for tweening functions goes to [Robert Penner](http://www.robertpenner.com)
 
 ## Features to implement
 
 - Parallel / Sequence animations
+```javascript
+.parallel() : TweenHash
+```
 - Tweening single/multiple property 
-      ```javascript
-      .property(from, to)
-      .properties( { 'x' : [ 0, 100 ] } ) 
-      ```
+```javascript
+.property(from, to)
+.properties( { 'x' : [ 0, 100 ] } ) 
+```

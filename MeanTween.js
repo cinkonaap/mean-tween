@@ -191,9 +191,6 @@ var MeanTween = MeanTween || {};
                 },
                 stop: function () {
                     timer._dispose();
-                },
-                t: function () {
-                    return timer._t;
                 }
             }
         })();
