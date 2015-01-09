@@ -82,8 +82,15 @@ var MeanTween = MeanTween || {};
             this._t = (this._currentTime - this._startTime) / this._duration;
             if( this._t > 1 ) {
                 reachedLoop = true;
-                this._t -= 1;
-                this._e = this._t - lastT + 1;
+
+                if(this._loopDelay) {
+                    this._t -= 1;
+                    this._e = this._t - lastT + 1;
+                } else {
+                    this._e = this._t - lastT;
+                    this._t = 0;
+                }
+
             } else {
                 this._e = this._t - lastT;
             }
