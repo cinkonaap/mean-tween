@@ -36,6 +36,8 @@ var MeanTween = MeanTween || {};
 
         this._duration = undefined;
         this._delay = undefined;
+        this._loopDelay = undefined;
+        this._loopTimes = undefined;
 
         this._interpolationMethod = undefined;
 
@@ -67,18 +69,19 @@ var MeanTween = MeanTween || {};
         return this;
     };
 
-    MeanTween.prototype.infinite = function () {
-        this._isInfinite = true;
-
+    MeanTween.prototype._iteranceTween = function () {
         this._preStep = function () {
             var lastTime = this._currentTime;
             var lastT = this._t;
 
             this._currentTime = T._getTime();
 
+            var reachedLoop = false;
+
             // clamp poly
             this._t = (this._currentTime - this._startTime) / this._duration;
             if( this._t > 1 ) {
+                reachedLoop = true;
                 this._t -= 1;
                 this._e = this._t - lastT + 1;
             } else {
@@ -86,25 +89,44 @@ var MeanTween = MeanTween || {};
             }
 
             this._v = this._interpolationMethod(this._t, 0, 1, 1);
+
+            return !reachedLoop;
         };
 
         this._postStep = function () {
             if( this._currentTime > this._targetTime ) {
+                this._loopCount++;
+
                 if( this._loopFunction != undefined ) {
                     this._loopFunction.call();
                 }
-
-                this._loopCount++;
 
                 this._currentTime = this._startTime = T._getTime();
                 this._targetTime = this._currentTime + ( this._duration * ( 1 - this._t ) );
             }
 
+            if(this._loopTimes != undefined && this._loopCount > this._loopTimes) {
+                return true;
+            }
+
             return false;
         };
 
-
         return this;
+    };
+
+    MeanTween.prototype.times = function (times, loopDelay) {
+        this._loopTimes = times || 1;
+        this._loopDelay = loopDelay || false;
+
+        this._iteranceTween();
+    };
+
+    MeanTween.prototype.infinite = function (loopDelay) {
+        this._isInfinite = true;
+        this._loopDelay = loopDelay || false;
+
+        this._iteranceTween();
     };
 
     MeanTween.prototype.delay = function (delay) {
@@ -116,26 +138,32 @@ var MeanTween = MeanTween || {};
     MeanTween.prototype.go = function () {
         var scope = this;
 
-        var timeoutFunction = function () {
-            this._preStep();
-            // api : t, e, d
-            if( this._stepFunction != undefined ) {
-                this._stepFunction.call(this._context, this._t, this._e, this._v, this._duration);
-            }
-
-            if(!this._postStep()) {
-                this._stepCallback = setTimeout(timeoutFunction, 0);
-            } else {
-                this._dispose();
-            }
-        }.bind(this);
-
         var runFunction = function () {
             this._currentTime = this._startTime = T._getTime();
             this._t = 0;
+            this._v = 0;
             this._targetTime = this._currentTime + this._duration;
 
             this._stepCallback = setTimeout(timeoutFunction, 0);
+        }.bind(this);
+
+        var timeoutFunction = function () {
+            if( this._preStep() || !this._loopDelay ) {
+                if( this._stepFunction != undefined ) {
+                    // api : t, e, v, d
+                    this._stepFunction.call(this._context, this._t, this._e, this._v, this._duration);
+                }
+
+                if(!this._postStep()) {
+                    this._stepCallback = setTimeout(timeoutFunction, 0);
+                } else {
+                    this._dispose();
+                }
+            } else {
+                this._postStep();
+
+                this._delayCallback = setTimeout(runFunction, this._delay);
+            }
         }.bind(this);
 
         if( this._delay != undefined && this._delay != 0 ) {
@@ -174,6 +202,8 @@ var MeanTween = MeanTween || {};
 
         timer._interpolationMethod = T.Interpolation.LINEAR;
 
+        timer._loopDelay = false;
+
         timer._preStep = function () {
             var lastTime = this._currentTime;
             var lastT = this._t;
@@ -184,6 +214,8 @@ var MeanTween = MeanTween || {};
             this._t = Math.max( 0, Math.min( 1, (this._currentTime - this._startTime) / this._duration ) );
             this._e = this._t - lastT;
             this._v = this._interpolationMethod(this._t, 0, 1, 1);
+
+            return true;
         };
 
         timer._postStep = function () {
