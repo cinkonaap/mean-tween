@@ -112,7 +112,7 @@ var MeanTween = MeanTween || {};
                 this._targetTime = this._currentTime + ( this._duration * ( 1 - this._t ) );
             }
 
-            if(this._loopTimes != undefined && this._loopCount > this._loopTimes) {
+            if(this._loopTimes != undefined && this._loopCount >= this._loopTimes) {
                 return true;
             }
 
