@@ -57,3 +57,8 @@ All rights for tweening functions goes to [Robert Penner](www.robertpenner.com)
 ## Features to implement
 
 - Parallel / Sequence animations
+- Tweening single/multiple property 
+      ```javascript
+      .property(from, to)
+      .properties( { 'x' : [ 0, 100 ] } ) 
+      ```
