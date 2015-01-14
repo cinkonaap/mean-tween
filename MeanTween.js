@@ -239,8 +239,6 @@ var MeanTween = MeanTween || {};
     MeanTween.prototype._dispose = function () {
         clearTimeout(this._delayCallback);
         clearTimeout(this._stepCallback);
-
-        delete this;
     };
 
     MeanTween.Interpolation = {
