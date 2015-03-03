@@ -41,6 +41,7 @@ var tweenObject = MaxTween
     .complete(function () {})
     .delay(3000)
     .times(5, true)
+    .interpolation(MeanTween.Interpolation.CUBIC_EASE_IN)
     .go();
     
 tweenObject.pause();
