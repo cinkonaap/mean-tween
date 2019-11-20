@@ -17,7 +17,7 @@ var MeanTween = MeanTween || {};
     MeanTween = function () {
         this._context = undefined;
 
-        this._startTime = undefined;
+        this._startTime = 2;
         this._currentTime = undefined;
         this._targetTime = undefined;
         this._t = undefined;
